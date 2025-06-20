@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miroshnichenko.creditcalc</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Miroshnichenko.creditcalc</h1>
+        
+        <div class="calculator-form">
+            <div class="form-group">
+                <label for="loanAmount">Сумма кредита:</label>
+                <input type="number" id="loanAmount" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="term">Срок (месяцев):</label>
+                <input type="number" id="term" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="interestRate">Процентная ставка (%):</label>
+                <input type="number" id="interestRate" step="0.1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="paymentType">Тип платежа:</label>
+                <select id="paymentType">
+                    <option value="annuity">Аннуитетный</option>
+                    <option value="differential">Дифференцированный</option>
+                </select>
+            </div>
+            
+            <button onclick="calculateLoan()">Рассчитать</button>
+        </div>
+
+        <div class="results">
+            <div class="schedule-container">
+                <h2>График платежей</h2>
+                <table id="paymentSchedule">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Платеж</th>
+                            <th>Основной долг</th>
+                            <th>Проценты</th>
+                            <th>Остаток</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="chart-container">
+                <h2>Распределение платежей</h2>
+                <canvas id="paymentChart"></canvas>
+            </div>
+
+            <button onclick="saveToPDF()">Сохранить в PDF</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
