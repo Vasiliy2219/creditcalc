@@ -23,8 +23,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    # Временно возвращаем простой текст для диагностики
-    return 'Hello, Render! Если вы видите это сообщение, Flask работает.'
+    return render_template('index.html')
 
 @app.route('/save_calculation', methods=['POST'])
 def save_calculation():
