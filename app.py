@@ -2,10 +2,19 @@ from flask import Flask, render_template, request, jsonify
 from database import db, Calculation
 import json
 import os
+import logging
+
+# Убедимся, что папка instance существует
+if not os.path.exists('instance'):
+    os.makedirs('instance')
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///calculations.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['PROPAGATE_EXCEPTIONS'] = True
+app.config['DEBUG'] = True
+
+logging.basicConfig(level=logging.DEBUG)
 
 db.init_app(app)
 
@@ -14,7 +23,8 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Временно возвращаем простой текст для диагностики
+    return 'Hello, Render! Если вы видите это сообщение, Flask работает.'
 
 @app.route('/save_calculation', methods=['POST'])
 def save_calculation():
